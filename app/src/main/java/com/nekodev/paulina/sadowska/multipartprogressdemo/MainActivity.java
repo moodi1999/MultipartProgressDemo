@@ -28,7 +28,8 @@ import pub.devrel.easypermissions.EasyPermissions;
  * Created by Paulina Sadowska on 09.12.2017.
  */
 
-public class MainActivity extends AppCompatActivity implements FileUploaderContract.View, EasyPermissions.PermissionCallbacks {
+public class MainActivity extends AppCompatActivity implements FileUploaderContract.View,
+        EasyPermissions.PermissionCallbacks {
 
     private static final int PICK_IMAGE = 100;
     private static final int RC_READ_FILE = 999;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements FileUploaderContr
     private void initializePresenter() {
         presenter = new FileUploaderPresenter(
                 this,
-                new FileResolver(getContentResolver()),
+                new FileResolver(this),
                 new FileUploaderModel(UploadsImServiceGenerator.createService())
         );
     }

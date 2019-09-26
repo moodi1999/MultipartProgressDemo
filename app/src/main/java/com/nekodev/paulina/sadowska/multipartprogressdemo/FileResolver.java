@@ -1,8 +1,7 @@
 package com.nekodev.paulina.sadowska.multipartprogressdemo;
 
-import android.content.ContentResolver;
+import android.content.Context;
 import android.net.Uri;
-import android.provider.MediaStore;
 
 import io.reactivex.annotations.Nullable;
 
@@ -12,10 +11,10 @@ import io.reactivex.annotations.Nullable;
 
 class FileResolver {
 
-    private final ContentResolver contentResolver;
+    private final Context Context;
 
-    FileResolver(ContentResolver contentResolver) {
-        this.contentResolver = contentResolver;
+    FileResolver(Context Context) {
+        this.Context = Context;
     }
 
     @Nullable
@@ -24,18 +23,6 @@ class FileResolver {
             return null;
         }
 
-        String[] filePathColumn = {MediaStore.Images.Media.DATA};
-        android.database.Cursor cursor = contentResolver.query(selectedImage, filePathColumn, null, null, null);
-        if (cursor == null) {
-            return null;
-        }
-
-        cursor.moveToFirst();
-
-        int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-        String filePath = cursor.getString(columnIndex);
-        cursor.close();
-
-        return filePath;
+        return utils.ContentFile.getPathFromUri(Context, selectedImage);
     }
 }
